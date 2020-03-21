@@ -2,7 +2,6 @@ package io.jeanfrias.characters.service.imp;
 
 import static io.jeanfrias.characters.util.Strings.TOO_MANY_FILTERS;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +18,7 @@ public class CharactersServiceImp implements CharactersService {
 	@Autowired
 	CharactersRepository charactersRepository;
 
+	@SuppressWarnings("null")
 	@Override
 	public List<Character> findCharacters(String name, String nameStartsWith, Date modifiedSince, List<String> comics,
 			List<String> series, List<String> events, List<String> stories, List<String> orderBy, Integer limit,

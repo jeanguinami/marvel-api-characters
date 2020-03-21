@@ -3,9 +3,18 @@ package io.jeanfrias.characters.dto;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
 public class ComicDataContainer {
 
 	@Getter @Setter private Integer offset;
