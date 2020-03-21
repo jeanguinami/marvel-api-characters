@@ -3,11 +3,14 @@ package io.jeanfrias.characters.dto;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class StoryList {
 
-    public Integer available;
-    public Integer returned;
-    public String collectionURI;
-    public List<StorySummary> items = null;
+	@Getter @Setter private Integer available;
+	@Getter @Setter private Integer returned;
+	@Getter @Setter private String collectionURI;
+	@Getter @Setter private List<StorySummary> items = null;
 
 }

@@ -6,12 +6,12 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CharacterDataContainer {
+public class SeriesDataContainer {
 
 	@Getter @Setter private Integer offset;
 	@Getter @Setter private Integer limit;
 	@Getter @Setter private Integer total;
 	@Getter @Setter private Integer count;
-	@Getter @Setter private List<Character> results = null;
+	@Getter @Setter private List<Series> results = null;
 
 }
