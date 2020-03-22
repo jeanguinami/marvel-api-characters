@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.jeanfrias.characters.dto.Character;
+import io.jeanfrias.characters.dto.CharacterDataWrapper;
 import io.jeanfrias.characters.service.CharactersService;
 
 @RestController
@@ -21,7 +21,7 @@ public class CharactersController {
 	CharactersService charactersService;
 
 	@GetMapping
-	public List<Character> getCharacters(@RequestParam(value = "name", required = false) String name,
+	public CharacterDataWrapper getCharacters(@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "nameStartsWith", required = false) String nameStartsWith,
 			@RequestParam(value = "modifiedSince", required = false) Date modifiedSince,
 			@RequestParam(value = "comics", required = false) List<String> comics,
@@ -37,11 +37,3 @@ public class CharactersController {
 	}
 
 }
-/*
- * public ArrayList<MedicoPerfilResponse> getPerfilMedico(
- * 
- * @RequestParam(value = "nomeMedico", required = false) String nomeMedico,
- * 
- * @RequestParam(value = "crmMedico", required = false) Long crmMedico) { return
- * medicoService.getPerfilMedico(nomeMedico, crmMedico);
- */
