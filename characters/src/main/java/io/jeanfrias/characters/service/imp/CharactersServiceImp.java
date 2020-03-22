@@ -30,13 +30,15 @@ public class CharactersServiceImp implements CharactersService {
 			List<String> comics, List<String> series, List<String> events, List<String> stories, List<String> orderBy,
 			Integer limit, Integer offset) {
 
-		HashMap<String, String> params = new HashMap<String, String>();
-
 		CharacterDataWrapper characters = new CharacterDataWrapper();
 
 		if (name != "" && nameStartsWith != "" && modifiedSince.toString() != "" && comics.toString() != ""
 				&& series.toString() != "" && events.toString() != "" && stories.toString() != ""
 				&& orderBy.toString() != "" && limit.toString() != "" && offset.toString() != "") {
+
+			HashMap<String, String> params = new HashMap<String, String>();
+			CharacterDataContainer characterContainer = new CharacterDataContainer();
+
 			if (name != null) {
 				params.put("name", name);
 			}
@@ -66,6 +68,8 @@ public class CharactersServiceImp implements CharactersService {
 			}
 
 			String query = createDynamicQuery(params);
+
+			characterContainer.setTotal(charactersRepository.countAllFiltered(query));
 
 			if (orderBy.toString() != null) {
 				if (orderBy.size() <= 2)
@@ -105,17 +109,15 @@ public class CharactersServiceImp implements CharactersService {
 			characters.setAttributionText("API provided by Marvel. © 2020 MARVEL");
 			characters.setAttributionHTML("<a href=\"http://marvel.com\">API provided by Marvel. © 2020 MARVEL</a>");
 			characters.setEtag("mocked_etag");
-			
-			CharacterDataContainer characterContainer = new CharacterDataContainer();
+
 			characterContainer.setOffset(offset);
 			characterContainer.setLimit(limit);
-			
-			// characterContainer.setTotal(charactersRepository.countAllFiltered());
-			// characterContainer.setCount(charactersRepository.findCharacters().size());
 
 			characters.setData(characterContainer);
 
 			characters.getData().setResults(charactersRepository.findCharacters(query));
+
+			characterContainer.setCount(characters.getData().getResults().size());
 
 		} else {
 			characters.setCode(Integer.valueOf(409));
@@ -158,6 +160,8 @@ public class CharactersServiceImp implements CharactersService {
 			}
 
 		}
+
+		System.out.println(query);
 
 		return query.toString();
 	}
