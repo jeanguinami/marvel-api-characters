@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,24 +44,38 @@ public class Story {
 	private Date modified;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_IMAGE")
 	private Image thumbnail;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_COMIC_LIST")
 	private ComicList comics;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_SERIES_LIST")
 	private SeriesList series;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_EVENT_LIST")
 	private EventList events;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_CHARACTER_LIST")
 	private CharacterList characters;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_CREATOR_LIST")
 	private CreatorList creators;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_COMIC_SUMMARY")
 	private ComicSummary originalissue;
 
 }

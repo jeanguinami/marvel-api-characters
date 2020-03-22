@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +41,7 @@ public class Event {
 	private String resourceURI;
 	@Getter
 	@Setter
+	@OneToMany(mappedBy="id", fetch = FetchType.LAZY)
 	private List<Url> urls = null;
 	@Getter
 	@Setter
@@ -49,27 +54,38 @@ public class Event {
 	private Date end;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_IMAGE")
 	private Image thumbnail;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_COMIC_LIST")
 	private ComicList comics;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_STORY_LIST")
 	private StoryList stories;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_SERIES_LIST")
 	private SeriesList series;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_CHARACTER_LIST")
 	private CharacterList characters;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_CREATOR_LIST")
 	private CreatorList creators;
 	@Getter
 	@Setter
+	@ManyToOne
+	@JoinColumn(name="ID_EVENT_SUMMARY")
 	private EventSummary next;
-	@Getter
-	@Setter
-	private EventSummary previous;
 
 }
