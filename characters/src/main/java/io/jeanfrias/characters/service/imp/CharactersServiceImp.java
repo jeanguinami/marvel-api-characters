@@ -1,10 +1,15 @@
 package io.jeanfrias.characters.service.imp;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import static io.jeanfrias.characters.util.Strings.EMPTY_PARAMETER;
+import static io.jeanfrias.characters.util.Strings.TOO_MANY_FILTERS;
+import static io.jeanfrias.characters.util.Strings.INVALID_LIMIT_ZERO;
+import static io.jeanfrias.characters.util.Strings.INVALID_LIMIT_ABOVE;
+import static io.jeanfrias.characters.util.Strings.INVALID_PARAMETER;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,61 +32,134 @@ public class CharactersServiceImp implements CharactersService {
 
 		HashMap<String, String> params = new HashMap<String, String>();
 
-		if (name != null && !isBlank(name))
-			params.put("name", name);
-		if (nameStartsWith != null && !isBlank(nameStartsWith))
-			params.put("nameStartsWith", nameStartsWith);
-		// TODO CONTINUA AI PARÇA
-
-		String query = createDynamicQuery(params);
-
 		CharacterDataWrapper characters = new CharacterDataWrapper();
 
-		characters.setCode(200);
-		characters.setStatus("OK.");
-		characters.setCopyright("by Jean Frias");
-		characters.setAttributionText("API provided by Marvel. © 2020 MARVEL");
-		characters.setAttributionHTML("<a href=\"http://marvel.com\">API provided by Marvel. © 2020 MARVEL</a>");
-		characters.setEtag("mocked_etag");
+		if (name != "" && nameStartsWith != "" && modifiedSince.toString() != "" && comics.toString() != ""
+				&& series.toString() != "" && events.toString() != "" && stories.toString() != ""
+				&& orderBy.toString() != "" && limit.toString() != "" && offset.toString() != "") {
+			if (name != null) {
+				params.put("name", name);
+			}
 
-		CharacterDataContainer characterContainer = new CharacterDataContainer();
+			if (nameStartsWith != null) {
+				params.put("nameStartsWith", nameStartsWith);
+			}
 
-		characterContainer.setOffset(offset);
-		characterContainer.setLimit(limit);
+			if (modifiedSince != null) {
+				params.put("modifiedSince", modifiedSince.toString());
+			}
 
-		// characterContainer.setTotal(charactersRepository.countAllFiltered());
-		// characterContainer.setCount(charactersRepository.findCharacters().size());
+			if (comics.toString() != null) {
+				params.put("comics", comics.toString());
+			}
 
-		characters.setData(characterContainer);
+			if (series.toString() != null) {
+				params.put("series", series.toString());
+			}
 
-		characters.getData().setResults(charactersRepository.findCharacters());
+			if (events.toString() != null) {
+				params.put("events", events.toString());
+			}
+
+			if (stories.toString() != null) {
+				params.put("stories", stories.toString());
+			}
+
+			String query = createDynamicQuery(params);
+
+			if (orderBy.toString() != null) {
+				if (orderBy.size() <= 2)
+					query.concat("ORDER BY " + orderBy.toString());
+				else {
+					characters.setCode(Integer.valueOf(409));
+					characters.setStatus(TOO_MANY_FILTERS);
+					return characters;
+				}
+			}
+
+			if (limit <= 100) {
+				if (limit < 1) {
+					characters.setCode(Integer.valueOf(409));
+					characters.setStatus(INVALID_LIMIT_ZERO);
+					return characters;
+				} else {
+					query.concat("LIMIT " + limit);
+				}
+			} else {
+				characters.setCode(Integer.valueOf(409));
+				characters.setStatus(INVALID_LIMIT_ABOVE);
+				return characters;
+			}
+
+			if (offset >= 0) {
+				query.concat(", " + offset);
+			} else {
+				characters.setCode(Integer.valueOf(409));
+				characters.setStatus(INVALID_PARAMETER);
+				return characters;
+			}
+
+			characters.setCode(Integer.valueOf(200));
+			characters.setStatus("OK.");
+			characters.setCopyright("by Jean Frias");
+			characters.setAttributionText("API provided by Marvel. © 2020 MARVEL");
+			characters.setAttributionHTML("<a href=\"http://marvel.com\">API provided by Marvel. © 2020 MARVEL</a>");
+			characters.setEtag("mocked_etag");
+			
+			CharacterDataContainer characterContainer = new CharacterDataContainer();
+			characterContainer.setOffset(offset);
+			characterContainer.setLimit(limit);
+			
+			// characterContainer.setTotal(charactersRepository.countAllFiltered());
+			// characterContainer.setCount(charactersRepository.findCharacters().size());
+
+			characters.setData(characterContainer);
+
+			characters.getData().setResults(charactersRepository.findCharacters(query));
+
+		} else {
+			characters.setCode(Integer.valueOf(409));
+			characters.setStatus(EMPTY_PARAMETER);
+			return characters;
+		}
 
 		return characters;
 	}
 
 	public String createDynamicQuery(HashMap<String, String> params) {
-		StringBuffer query = new StringBuffer("SELECT * FROM CHARACTER WHERE ");
+		StringBuffer query = new StringBuffer("SELECT * FROM CHARACTER ");
 		Boolean isFirstParam = true;
+		if (!params.isEmpty()) {
 
-		params.forEach((key, value) -> {
-			if (isFirstParam) {
-				if (key == "nameStartsWith") {
-					query.append(key + " LIKE " + value + "%");
+			for (Map.Entry<String, String> param : params.entrySet()) {
+
+				if (isFirstParam) {
+					if (param.getKey() == "nameStartsWith") {
+						query.append("WHERE " + param.getKey() + " LIKE " + param.getValue() + "%");
+					} else if (param.getKey() == "comics" || param.getKey() == "series" || param.getKey() == "events"
+							|| param.getKey() == "stories") {
+						query.append("WHERE " + param.getKey() + " IN (" + param.getValue() + ")");
+					} else {
+						query.append("WHERE " + param.getKey() + " = " + param.getValue());
+					}
 				} else {
-					query.append(key + " = " + value);
+					if (param.getKey() == "nameStartsWith") {
+						query.append(" AND " + param.getKey() + " LIKE " + param.getValue() + "%");
+					} else if (param.getKey() == "comics" || param.getKey() == "series" || param.getKey() == "events"
+							|| param.getKey() == "stories") {
+						query.append(" AND " + param.getKey() + " IN (" + param.getValue() + ")");
+					} else {
+						query.append(" AND " + param.getKey() + " = " + param.getValue());
+					}
 				}
-			} else {
-				if (key == "nameStartsWith") {
-					query.append(" AND " + key + " LIKE " + value + "%");
-				} else {
-					query.append(" AND " + key + " = " + value);
-				}
+
+				isFirstParam = false;
+
 			}
-			
-			isFirstParam = false;
-		});
-		return query.toString();
 
+		}
+
+		return query.toString();
 	}
 
 }
