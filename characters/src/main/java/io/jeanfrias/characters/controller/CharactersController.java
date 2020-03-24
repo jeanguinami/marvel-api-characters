@@ -32,7 +32,7 @@ public class CharactersController {
 			@RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit,
 			@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset) {
 
-		return charactersService.findCharacters(name, nameStartsWith, modifiedSince, comics, series, events, stories,
+		return charactersService.findCharactersByFilters(name, nameStartsWith, modifiedSince, comics, series, events, stories,
 				orderBy, limit, offset);
 	}
 

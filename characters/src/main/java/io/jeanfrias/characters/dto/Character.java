@@ -36,9 +36,14 @@ public class Character {
 		this.series = series;
 	}
 
+	public Character(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Integer id;
 
 	private String name;

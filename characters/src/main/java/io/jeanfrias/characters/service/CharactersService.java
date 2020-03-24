@@ -7,7 +7,7 @@ import io.jeanfrias.characters.dto.CharacterDataWrapper;
 
 public interface CharactersService {
 
-	public CharacterDataWrapper findCharacters(String name, String nameStartsWith, Date modifiedSince, List<String> comics,
+	public CharacterDataWrapper findCharactersByFilters(String name, String nameStartsWith, Date modifiedSince, List<String> comics,
 			List<String> series, List<String> events, List<String> stories, List<String> orderBy, Integer limit,
 			Integer offset);
 

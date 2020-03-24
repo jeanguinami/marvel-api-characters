@@ -14,12 +14,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import io.jeanfrias.characters.dto.Character;
 import io.jeanfrias.characters.repository.CharactersRepository;
+import io.jeanfrias.characters.service.impl.CharactersServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CharactersServiceImpTest {
 
 	@InjectMocks
-	CharactersServiceImp charactersService;
+	CharactersServiceImpl charactersService;
 
 	@Mock
 	CharactersRepository charactersRepository;
