@@ -9,5 +9,6 @@ public class Strings {
 	public static final String INVALID_ORDERING = "Invalid or unrecognized parameter.";
 	public static final String TOO_MANY_FILTERS = "Too many values sent to a multi-value list filter.";
 	public static final String INVALID_VALUE = "Invalid value passed to a filter.";
+	public static final String NO_RESULT = "No result found on database";
 	
 }

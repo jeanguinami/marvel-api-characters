@@ -7,32 +7,62 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
 @Table(name = "STORY_SUMMARY")
 public class StorySummary {
 
+	public StorySummary() {
+		super();
+	}
+
+	public StorySummary(Integer id, String resourceURI, String name, String type) {
+		super();
+		this.id = id;
+		this.resourceURI = resourceURI;
+		this.name = name;
+		this.type = type;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	private Integer id;
-	@Getter
-	@Setter
+
 	private String resourceURI;
-	@Getter
-	@Setter
+
 	private String name;
-	@Getter
-	@Setter
+
 	private String type;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getResourceURI() {
+		return resourceURI;
+	}
+
+	public void setResourceURI(String resourceURI) {
+		this.resourceURI = resourceURI;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

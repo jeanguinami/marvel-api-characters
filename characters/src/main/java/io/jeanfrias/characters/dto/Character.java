@@ -38,8 +38,6 @@ public class Character {
 
 	public Character(Integer id, String name) {
 		super();
-		this.id = id;
-		this.name = name;
 	}
 
 	@Id
@@ -67,7 +65,7 @@ public class Character {
 	private ComicList comics;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_STORIES_LIST")
+	@JoinColumn(name = "ID_STORY_LIST")
 	private StoryList stories;
 
 	@ManyToOne

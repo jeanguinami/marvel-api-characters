@@ -7,29 +7,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
 @Table(name = "SERIES_SUMMARY")
 public class SeriesSummary {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	private Integer id;
-	@Getter
-	@Setter
+
 	private String resourceURI;
-	@Getter
-	@Setter
+
 	private String name;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getResourceURI() {
+		return resourceURI;
+	}
+
+	public void setResourceURI(String resourceURI) {
+		this.resourceURI = resourceURI;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

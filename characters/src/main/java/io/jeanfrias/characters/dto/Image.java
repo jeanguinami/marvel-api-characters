@@ -6,28 +6,50 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
 public class Image {
 
+	public Image() {
+		super();
+	}
+
+	public Image(Integer id, String path, String extension) {
+		super();
+		this.id = id;
+		this.path = path;
+		this.extension = extension;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	private Integer id;
-	@Getter
-	@Setter
+
 	private String path;
-	@Getter
-	@Setter
+
 	private String extension;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 
 }

@@ -1,4 +1,4 @@
-package io.jeanfrias.characters.repository.imp;
+package io.jeanfrias.characters.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,13 @@ public class CustomCharactersRepositoryImpl implements CustomCharactersRepositor
 	private EntityManager manager;
 
 	@Override
-	public List<Character> findByQuery(String query) {
-		
+	public List<Character> findByQuery(StringBuffer query, Integer limit, Integer offset) {
+
 		List<Character> result = new ArrayList<Character>();
-		
-		result = manager.createQuery(query, Character.class).getResultList();
-		
+
+		result = manager.createQuery(query.toString(), Character.class).setMaxResults(limit).setFirstResult(offset)
+				.getResultList();
+
 		return result;
 	}
 

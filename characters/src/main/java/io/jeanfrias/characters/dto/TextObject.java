@@ -7,32 +7,62 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
 @Table(name = "TEXT_OBJECT")
 public class TextObject {
 
+	public TextObject() {
+		super();
+	}
+
+	public TextObject(Integer id, String type, String language, String text) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.language = language;
+		this.text = text;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	private Integer id;
-	@Getter
-	@Setter
+
 	private String type;
-	@Getter
-	@Setter
+
 	private String language;
-	@Getter
-	@Setter
+
 	private String text;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 
 }

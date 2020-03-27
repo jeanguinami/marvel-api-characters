@@ -6,6 +6,6 @@ import io.jeanfrias.characters.dto.Character;
 
 public interface CustomCharactersRepository {
 
-	List<Character> findByQuery(String query);
+	List<Character> findByQuery(StringBuffer query, Integer limit, Integer offset);
 	
 }

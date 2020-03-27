@@ -11,36 +11,75 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
 @Table(name = "CREATOR_LIST")
 public class CreatorList {
 
+	public CreatorList() {
+		super();
+	}
+
+	public CreatorList(Integer id, Integer available, Integer returned, String collectionURI,
+			List<CreatorSummary> items) {
+		super();
+		this.id = id;
+		this.available = available;
+		this.returned = returned;
+		this.collectionURI = collectionURI;
+		this.items = items;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	private Integer id;
-	@Getter
-	@Setter
+
 	private Integer available;
-	@Getter
-	@Setter
+
 	private Integer returned;
-	@Getter
-	@Setter
+
 	private String collectionURI;
-	@Getter
-	@Setter
+
 	@OneToMany(mappedBy="id", fetch = FetchType.LAZY)
 	private List<CreatorSummary> items = null;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(Integer available) {
+		this.available = available;
+	}
+
+	public Integer getReturned() {
+		return returned;
+	}
+
+	public void setReturned(Integer returned) {
+		this.returned = returned;
+	}
+
+	public String getCollectionURI() {
+		return collectionURI;
+	}
+
+	public void setCollectionURI(String collectionURI) {
+		this.collectionURI = collectionURI;
+	}
+
+	public List<CreatorSummary> getItems() {
+		return items;
+	}
+
+	public void setItems(List<CreatorSummary> items) {
+		this.items = items;
+	}
 
 }
